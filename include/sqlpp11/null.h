@@ -27,6 +27,7 @@
 #ifndef SQLPP_NULL_H
 #define SQLPP_NULL_H
 
+#include <sqlpp11/workaround.h>
 #include <sqlpp11/no_value.h>
 
 namespace sqlpp
@@ -50,7 +51,7 @@ namespace sqlpp
 			}
 		};
 
-	constexpr null_t null = {};
+	static SQLPP_CONSTEXPR_OR_CONST null_t null = {};
 
 }
 

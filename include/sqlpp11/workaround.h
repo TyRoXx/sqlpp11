@@ -30,14 +30,22 @@
 //TODO: consider using Boost for this stuff
 #ifdef _MSC_VER
 #	define SQLPP_CONSTEXPR_OR_CONST const
+#	define SQLPP_CONSTEXPR
 #else
 #	define SQLPP_CONSTEXPR_OR_CONST constexpr
+#	define SQLPP_CONSTEXPR constexpr
 #endif
 
 #ifdef _MSC_VER
 #	define SQLPP_HAS_INLINE_NAMESPACE 0
 #else
 #	define SQLPP_HAS_INLINE_NAMESPACE 1
+#endif
+
+#ifdef _MSC_VER
+#	define SQLPP_HAS_DEFAULTED_MOVE_METHODS 0
+#else
+#	define SQLPP_HAS_DEFAULTED_MOVE_METHODS 1
 #endif
 
 #endif

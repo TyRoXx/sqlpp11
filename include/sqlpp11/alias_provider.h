@@ -47,7 +47,7 @@
 		};\
 	};\
 };\
-constexpr name##_t name = {};
+static SQLPP_CONSTEXPR_OR_CONST name##_t name = {};
 
 namespace sqlpp
 {

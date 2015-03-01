@@ -27,6 +27,7 @@
 #ifndef SQLPP_DEFAULT_VALUE_H
 #define SQLPP_DEFAULT_VALUE_H
 
+#include <sqlpp11/workaround.h>
 #include <sqlpp11/no_value.h>
 
 namespace sqlpp
@@ -36,7 +37,7 @@ namespace sqlpp
 		using _traits = make_traits<no_value_t, tag::is_expression>;
 		using _nodes = detail::type_vector<>;
 
-		static constexpr bool _is_trivial() { return false; }
+		static SQLPP_CONSTEXPR bool _is_trivial() { return false; }
 	};
 
 	template<typename Context>
@@ -52,7 +53,7 @@ namespace sqlpp
 			}
 		};
 
-	constexpr default_value_t default_value = {};
+	static SQLPP_CONSTEXPR_OR_CONST default_value_t default_value = {};
 
 }
 

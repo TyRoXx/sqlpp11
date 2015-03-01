@@ -27,6 +27,8 @@
 #ifndef SQLPP_RESULT_H
 #define SQLPP_RESULT_H
 
+#include <sqlpp11/workaround.h>
+
 // FIXME: include for move?
 namespace sqlpp
 {
@@ -53,9 +55,30 @@ namespace sqlpp
 			}
 
 			result_t(const result_t&) = delete;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 			result_t(result_t&&) = default;
+#else
+			result_t(result_t&&other)
+				: _result(std::move(other._result))
+				, _result_row(std::move(other._result_row))
+				, _end(std::move(other._end))
+				, _end_row(std::move(other._end_row))
+			{
+			}
+#endif
 			result_t& operator=(const result_t&) = delete;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 			result_t& operator=(result_t&&) = default;
+#else
+			result_t& operator=(result_t&&other)
+			{
+				_result = std::move(other._result);
+				_result_row = std::move(other._result_row);
+				_end = std::move(other._end);
+				_end_row = std::move(other._end_row);
+				return *this;
+			}
+#endif
 
 			// Iterator
 			class iterator

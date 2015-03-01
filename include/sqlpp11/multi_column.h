@@ -30,7 +30,7 @@
 #include <sqlpp11/no_value.h>
 #include <sqlpp11/logic.h>
 #include <sqlpp11/detail/type_set.h>
-
+#include <sqlpp11/workaround.h>
 #include <sqlpp11/detail/copy_tuple_args.h>
 
 namespace sqlpp
@@ -55,9 +55,25 @@ namespace sqlpp
 			{}
 
 			multi_column_t(const multi_column_t&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 			multi_column_t(multi_column_t&&) = default;
+#else
+			multi_column_t(multi_column_t&&other)
+				: _columns(std::move(other._columns))
+			{
+			}
+#endif
 			multi_column_t& operator=(const multi_column_t&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 			multi_column_t& operator=(multi_column_t&&) = default;
+#else
+			multi_column_t& operator=(multi_column_t&&other)
+			{
+				_columns = std::move(other._columns);
+				return *this;
+			}
+
+#endif
 			~multi_column_t() = default;
 
 			template<typename AliasProvider>
@@ -92,9 +108,25 @@ namespace sqlpp
 			{}
 
 			multi_column_alias_t(const multi_column_alias_t&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 			multi_column_alias_t(multi_column_alias_t&&) = default;
+#else
+			multi_column_alias_t(multi_column_alias_t&&other)
+				: _columns(std::move(other._columns))
+			{
+			}
+#endif
 			multi_column_alias_t& operator=(const multi_column_alias_t&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 			multi_column_alias_t& operator=(multi_column_alias_t&&) = default;
+#else
+			multi_column_alias_t& operator=(multi_column_alias_t&&other)
+			{
+				_columns = std::move(other._columns);
+				return *this;
+			}
+
+#endif
 			~multi_column_alias_t() = default;
 
 			std::tuple<Columns...> _columns;
