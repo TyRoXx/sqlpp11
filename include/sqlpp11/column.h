@@ -65,9 +65,17 @@ namespace sqlpp
 
 		column_t() = default;
 		column_t(const column_t&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 		column_t(column_t&&) = default;
+#else
+		column_t(column_t&&); //TODO
+#endif
 		column_t& operator=(const column_t&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 		column_t& operator=(column_t&&) = default;
+#else
+		column_t& operator=(column_t&&); //TODO
+#endif
 		~column_t() = default;
 
 		template<typename T = _table>

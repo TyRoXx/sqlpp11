@@ -48,8 +48,6 @@ namespace sqlpp
 		static_assert(logic::all_t<is_text_t<First>::value, is_text_t<Args>::value...>::value, "at least one non-text argument detected in concat()");
 		struct _alias_t
 		{
-			static constexpr const char _literal[] =  "concat_";
-			using _name_t = sqlpp::make_char_sequence<sizeof(_literal), _literal>;
 			template<typename T>
 				struct _member_t
 				{
@@ -62,9 +60,17 @@ namespace sqlpp
 		{}
 
 		concat_t(const concat_t&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 		concat_t(concat_t&&) = default;
+#else
+		concat_t(concat_t&&); //TODO
+#endif
 		concat_t& operator=(const concat_t&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 		concat_t& operator=(concat_t&&) = default;
+#else
+		concat_t& operator=(concat_t&&); //TODO
+#endif
 		~concat_t() = default;
 
 		std::tuple<First, Args...> _args;

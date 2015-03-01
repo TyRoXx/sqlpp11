@@ -48,9 +48,24 @@ namespace sqlpp
 				_value(operand)
 			{}
 			tvin_arg_t(const tvin_arg_t&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 			tvin_arg_t(tvin_arg_t&&) = default;
+#else
+			tvin_arg_t(tvin_arg_t&& other)
+				: _value(std::move(other._value))
+			{
+			}
+#endif
 			tvin_arg_t& operator=(const tvin_arg_t&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 			tvin_arg_t& operator=(tvin_arg_t&&) = default;
+#else
+			tvin_arg_t& operator=(tvin_arg_t&& other)
+			{
+				_value = std::move(other._value);
+				return *this;
+			}
+#endif
 			~tvin_arg_t() = default;
 
 			_operand_t _value;
@@ -110,9 +125,24 @@ namespace sqlpp
 				_value(arg._value)
 			{}
 			tvin_t(const tvin_t&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 			tvin_t(tvin_t&&) = default;
+#else
+			tvin_t(tvin_t&& other)
+				: _value(std::move(other._value))
+			{
+			}
+#endif
 			tvin_t& operator=(const tvin_t&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 			tvin_t& operator=(tvin_t&&) = default;
+#else
+			tvin_t& operator=(tvin_t&& other)
+			{
+				_value = std::move(other._value);
+				return *this;
+			}
+#endif
 			~tvin_t() = default;
 
 			bool _is_trivial() const

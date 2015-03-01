@@ -53,7 +53,7 @@ namespace sqlpp
 	struct parameter_value_t<integral>
 	{
 		using _value_type = integral;
-		using _cpp_value_type = typename _value_type::_cpp_value_type;
+		using _cpp_value_type = _value_type::_cpp_value_type;
 
 		parameter_value_t():
 			_value(0),

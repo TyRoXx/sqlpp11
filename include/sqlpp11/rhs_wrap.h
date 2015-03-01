@@ -30,6 +30,7 @@
 #include <sqlpp11/tvin.h>
 #include <sqlpp11/default_value.h>
 #include <sqlpp11/null.h>
+#include <sqlpp11/workaround.h>
 
 namespace sqlpp
 {
@@ -38,7 +39,7 @@ namespace sqlpp
 		template<typename Expr, typename Enable = void>
 			struct rhs_is_trivial_t
 			{
-				static constexpr bool _(const Expr&)
+				static SQLPP_CONSTEXPR bool _(const Expr&)
 				{
 					return false;
 				}
@@ -88,7 +89,7 @@ namespace sqlpp
 		template<typename Expr, typename Enable = void>
 			struct rhs_is_null_t
 			{
-				static constexpr bool _(const Expr&)
+				static SQLPP_CONSTEXPR bool _(const Expr&)
 				{
 					return false;
 				}
@@ -125,9 +126,24 @@ namespace sqlpp
 			{}
 
 			rhs_wrap_t(const rhs_wrap_t&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 			rhs_wrap_t(rhs_wrap_t&&) = default;
+#else
+			rhs_wrap_t(rhs_wrap_t&& other)
+				: _expr(std::move(other._expr))
+			{
+			}
+#endif
 			rhs_wrap_t& operator=(const rhs_wrap_t&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 			rhs_wrap_t& operator=(rhs_wrap_t&&) = default;
+#else
+			rhs_wrap_t& operator=(rhs_wrap_t&& other)
+			{
+				_expr = std::move(other._expr);
+				return *this;
+			}
+#endif
 			~rhs_wrap_t() = default;
 
 			bool _is_null() const
@@ -136,7 +152,7 @@ namespace sqlpp
 						or detail::rhs_is_null_t<Expr>::_(_expr);
 			}
 
-			static constexpr bool _is_default()
+			static SQLPP_CONSTEXPR bool _is_default()
 			{
 				return std::is_same<Expr, default_value_t>::value;
 			}

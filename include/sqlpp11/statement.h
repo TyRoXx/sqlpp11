@@ -28,6 +28,7 @@
 #define SQLPP_STATEMENT_H
 
 #include <sqlpp11/result.h>
+#include <sqlpp11/workaround.h>
 #include <sqlpp11/parameter_list.h>
 #include <sqlpp11/prepared_select.h>
 #include <sqlpp11/serialize.h>
@@ -131,7 +132,7 @@ namespace sqlpp
 				// A select can be used as a pseudo table if
 				//   - at least one column is selected
 				//   - the select is complete (leaks no table requirements or cte requirements)
-				static constexpr bool _can_be_used_as_table()
+				static SQLPP_CONSTEXPR bool _can_be_used_as_table()
 				{
 					return has_result_row_t<_statement_t>::value
 					 	and _required_tables::size::value == 0
@@ -217,12 +218,12 @@ namespace sqlpp
 		{}
 
 		statement_t(const statement_t& r) = default;
-		statement_t(statement_t&& r) = default;
+		statement_t(statement_t&&r) = default;
 		statement_t& operator=(const statement_t& r) = default;
 		statement_t& operator=(statement_t&& r) = default;
 		~statement_t() = default;
 
-		static constexpr size_t _get_static_no_of_parameters()
+		static SQLPP_CONSTEXPR size_t _get_static_no_of_parameters()
 		{
 			return detail::type_vector_size<parameters_of<statement_t>>::value;
 		}
@@ -232,7 +233,7 @@ namespace sqlpp
 			return _get_static_no_of_parameters();
 		}
 
-		static constexpr bool _can_be_used_as_table()
+		static SQLPP_CONSTEXPR bool _can_be_used_as_table()
 		{
 			return _policies_t::_can_be_used_as_table();
 		}

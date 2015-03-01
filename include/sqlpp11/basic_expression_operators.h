@@ -45,7 +45,7 @@ namespace sqlpp
 			template<typename T>
 				struct _is_valid_comparison_operand
 				{
-					static constexpr bool value = 
+					static SQLPP_CONSTEXPR_OR_CONST bool value = 
 						(is_expression_t<T>::value // expressions are OK
 						 or is_multi_expression_t<T>::value) // multi-expressions like ANY are OK for comparisons, too
 						and ValueType::template _is_valid_operand<T>::value // the correct value type is required, of course

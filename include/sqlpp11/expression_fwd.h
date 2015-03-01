@@ -38,13 +38,19 @@ namespace sqlpp
 		struct less
 		{
 			using _traits = make_traits<boolean>;
-			static constexpr const char* _name = "<";
+			static const char* name()
+			{
+				return "<";
+			}
 		};
 
 		struct less_equal
 		{
 			using _traits = make_traits<boolean>;
-			static constexpr const char* _name = "<=";
+			static const char* name()
+			{
+				return "<=";
+			}
 		};
 
 		struct equal_to
@@ -60,25 +66,37 @@ namespace sqlpp
 		struct greater_equal
 		{
 			using _traits = make_traits<boolean>;
-			static constexpr const char* _name = ">=";
+			static const char* name()
+			{
+				return ">=";
+			}
 		};
 
 		struct greater
 		{
 			using _traits = make_traits<boolean>;
-			static constexpr const char* _name = ">";
+			static const char* name()
+			{
+				return ">";
+			}
 		};
 
 		struct logical_or
 		{
 			using _traits = make_traits<boolean>;
-			static constexpr const char* _name = " OR ";
+			static const char* name()
+			{
+				return " OR ";
+			}
 		};
 
 		struct logical_and
 		{
 			using _traits = make_traits<boolean>;
-			static constexpr const char* _name = " AND ";
+			static const char* name()
+			{
+				return " AND ";
+			}
 		};
 
 		struct logical_not
@@ -90,61 +108,88 @@ namespace sqlpp
 			struct plus
 			{
 				using _traits = make_traits<ValueType>;
-				static constexpr const char* _name = "+";
+				static const char* name()
+				{
+					return "+";
+				}
 			};
 
 		template<typename ValueType>
 			struct minus
 			{
 				using _traits = make_traits<ValueType>;
-				static constexpr const char* _name = "-";
+				static const char* name()
+				{
+					return "-";
+				}
 			};
 
 		template<typename ValueType>
 			struct multiplies
 			{
 				using _traits = make_traits<ValueType>;
-				static constexpr const char* _name = "*";
+				static const char* name()
+				{
+					return "*";
+				}
 			};
 
 		struct divides
 		{
 			using _traits = make_traits<floating_point>;
-			static constexpr const char* _name = "/";
+			static const char* name()
+			{
+				return "/";
+			}
 		};
 
 		struct modulus
 		{
 			using _traits = make_traits<integral>;
-			static constexpr const char* _name = "%";
+			static const char* name()
+			{
+				return "%";
+			}
 		};
 
 		template<typename ValueType>
 			struct unary_minus
 			{
 				using _traits = make_traits<ValueType>;
-				static constexpr const char* _name = "-";
+				static const char* name()
+				{
+					return "-";
+				}
 			};
 
 		template<typename ValueType>
 			struct unary_plus
 			{
 				using _traits = make_traits<ValueType>;
-				static constexpr const char* _name = "+";
+				static const char* name()
+				{
+					return "+";
+				}
 			};
 
 		template<typename ValueType>
 			struct bitwise_and
 			{
 				using _traits = make_traits<ValueType>;
-				static constexpr const char* _name = "&";
+				static const char* name()
+				{
+					return "&";
+				}
 			};
 
 		template<typename ValueType>
 			struct bitwise_or
 			{
 				using _traits = make_traits<ValueType>;
-				static constexpr const char* _name = "|";
+				static const char* name()
+				{
+					return "|";
+				}
 			};
 
 	}

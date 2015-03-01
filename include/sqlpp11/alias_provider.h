@@ -36,8 +36,6 @@
 {\
 	struct _alias_t\
 	{\
-		static SQLPP_CONSTEXPR_OR_CONST const char _literal[] =  #name;\
-		using _name_t = sqlpp::make_char_sequence<sizeof(_literal), _literal>;\
 		template<typename T>\
 		struct _member_t\
 		{\

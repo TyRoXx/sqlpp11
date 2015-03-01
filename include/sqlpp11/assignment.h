@@ -53,9 +53,26 @@ namespace sqlpp
 			{}
 
 			assignment_t(const assignment_t&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 			assignment_t(assignment_t&&) = default;
+#else
+			assignment_t(assignment_t&& other)
+				: _lhs(std::move(other._lhs))
+				, _rhs(std::move(other._rhs))
+			{
+			}
+#endif
 			assignment_t& operator=(const assignment_t&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 			assignment_t& operator=(assignment_t&&) = default;
+#else
+			assignment_t& operator=(assignment_t&& other)
+			{
+				_lhs = std::move(other._lhs);
+				_rhs = std::move(other._rhs);
+				return *this;
+			}
+#endif
 			~assignment_t() = default;
 
 			_lhs_t _lhs;

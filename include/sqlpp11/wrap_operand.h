@@ -27,11 +27,13 @@
 #ifndef SQLPP_DETAIL_WRAP_OPERAND_H
 #define SQLPP_DETAIL_WRAP_OPERAND_H
 
-#include <string>
 #include <sqlpp11/wrap_operand_fwd.h>
 #include <sqlpp11/serializer.h>
 #include <sqlpp11/type_traits.h>
 #include <sqlpp11/basic_expression_operators.h>
+#include <sqlpp11/workaround.h>
+#include <string>
+#include <cstdint>
 
 namespace sqlpp
 {
@@ -56,9 +58,24 @@ namespace sqlpp
 		{}
 
 		boolean_operand(const boolean_operand&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 		boolean_operand(boolean_operand&&) = default;
+#else
+		boolean_operand(boolean_operand&& other)
+			: _t(std::move(other._t))
+		{
+		}
+#endif
 		boolean_operand& operator=(const boolean_operand&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 		boolean_operand& operator=(boolean_operand&&) = default;
+#else
+		boolean_operand& operator=(boolean_operand&& other)
+		{
+			_t = std::move(other._t);
+			return *this;
+		}
+#endif
 		~boolean_operand() = default;
 
 		bool _is_trivial() const { return _t == false; }
@@ -84,7 +101,7 @@ namespace sqlpp
 		using _traits = make_traits<integral, tag::is_expression, tag::is_wrapped_value>;
 		using _nodes = detail::type_vector<>;
 
-		using _value_t = int64_t;
+		using _value_t = std::int64_t;
 
 		integral_operand():
 			_t{}
@@ -95,9 +112,24 @@ namespace sqlpp
 		{}
 
 		integral_operand(const integral_operand&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 		integral_operand(integral_operand&&) = default;
+#else
+		integral_operand(integral_operand&& other)
+			: _t(std::move(other._t))
+		{
+		}
+#endif
 		integral_operand& operator=(const integral_operand&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 		integral_operand& operator=(integral_operand&&) = default;
+#else
+		integral_operand& operator=(integral_operand&& other)
+		{
+			_t = std::move(other._t);
+			return *this;
+		}
+#endif
 		~integral_operand() = default;
 
 		bool _is_trivial() const { return _t == 0; }
@@ -135,9 +167,24 @@ namespace sqlpp
 		{}
 
 		floating_point_operand(const floating_point_operand&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 		floating_point_operand(floating_point_operand&&) = default;
+#else
+		floating_point_operand(floating_point_operand&& other)
+			: _t(std::move(other._t))
+		{
+		}
+#endif
 		floating_point_operand& operator=(const floating_point_operand&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 		floating_point_operand& operator=(floating_point_operand&&) = default;
+#else
+		floating_point_operand& operator=(floating_point_operand&& other)
+		{
+			_t = std::move(other._t);
+			return *this;
+		}
+#endif
 		~floating_point_operand() = default;
 
 		bool _is_trivial() const { return _t == 0; }
@@ -174,9 +221,24 @@ namespace sqlpp
 		{}
 
 		text_operand(const text_operand&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 		text_operand(text_operand&&) = default;
+#else
+		text_operand(text_operand&& other)
+			: _t(std::move(other._t))
+		{
+		}
+#endif
 		text_operand& operator=(const text_operand&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 		text_operand& operator=(text_operand&&) = default;
+#else
+		text_operand& operator=(text_operand&& other)
+		{
+			_t = std::move(other._t);
+			return *this;
+		}
+#endif
 		~text_operand() = default;
 
 		bool _is_trivial() const { return _t.empty(); }

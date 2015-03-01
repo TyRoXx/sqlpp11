@@ -29,6 +29,7 @@
 
 #include <utility>
 #include <sqlpp11/basic_expression_operators.h>
+#include <sqlpp11/workaround.h>
 
 namespace sqlpp
 {
@@ -54,7 +55,7 @@ namespace sqlpp
 		struct result_field_methods_base_t
 		{
 			using _field_spec_t = detail::get_field_spec_t<Field>;
-			static constexpr bool _null_is_trivial = true;
+			static SQLPP_CONSTEXPR_OR_CONST bool _null_is_trivial = true;
 			operator cpp_value_type_of<_field_spec_t>() const { return static_cast<const Field&>(*this).value(); }
 		};
 
@@ -66,7 +67,7 @@ namespace sqlpp
 					and not null_is_trivial_value_t<FieldSpec>::value>::type>
 		{
 			using _field_spec_t = FieldSpec;
-			static constexpr bool _null_is_trivial = false;
+			static SQLPP_CONSTEXPR_OR_CONST bool _null_is_trivial = false;
 		};
 
 	template<typename Field>

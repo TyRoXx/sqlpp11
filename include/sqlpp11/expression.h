@@ -54,9 +54,26 @@ namespace sqlpp
 			{}
 
 			binary_expression_t(const binary_expression_t&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 			binary_expression_t(binary_expression_t&&) = default;
+#else
+			binary_expression_t(binary_expression_t&& other)
+				: _lhs(std::move(other._lhs))
+				, _rhs(std::move(other._rhs))
+			{
+			}
+#endif
 			binary_expression_t& operator=(const binary_expression_t&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 			binary_expression_t& operator=(binary_expression_t&&) = default;
+#else
+			binary_expression_t& operator=(binary_expression_t&& other)
+			{
+				_lhs = std::move(other._lhs);
+				_rhs = std::move(other._rhs);
+				return *this;
+			}
+#endif
 			~binary_expression_t() = default;
 
 			_lhs_t _lhs;
@@ -103,9 +120,26 @@ namespace sqlpp
 			{}
 
 			binary_expression_t(const binary_expression_t&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 			binary_expression_t(binary_expression_t&&) = default;
+#else
+			binary_expression_t(binary_expression_t&& other)
+				: _lhs(std::move(other._lhs))
+				, _rhs(std::move(other._rhs))
+			{
+			}
+#endif
 			binary_expression_t& operator=(const binary_expression_t&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 			binary_expression_t& operator=(binary_expression_t&&) = default;
+#else
+			binary_expression_t& operator=(binary_expression_t&& other)
+			{
+				_lhs = std::move(other._lhs);
+				_rhs = std::move(other._rhs);
+				return *this;
+			}
+#endif
 			~binary_expression_t() = default;
 
 			_lhs_t _lhs;
@@ -149,9 +183,24 @@ namespace sqlpp
 			{}
 
 			unary_expression_t(const unary_expression_t&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 			unary_expression_t(unary_expression_t&&) = default;
+#else
+			unary_expression_t(unary_expression_t&& other)
+				: _rhs(std::move(other._rhs))
+			{
+			}
+#endif
 			unary_expression_t& operator=(const unary_expression_t&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 			unary_expression_t& operator=(unary_expression_t&&) = default;
+#else
+			unary_expression_t& operator=(unary_expression_t&& other)
+			{
+				_rhs = std::move(other._rhs);
+				return *this;
+			}
+#endif
 			~unary_expression_t() = default;
 
 			Rhs _rhs;
@@ -196,9 +245,26 @@ namespace sqlpp
 		{}
 
 		binary_expression_t(const binary_expression_t&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 		binary_expression_t(binary_expression_t&&) = default;
+#else
+		binary_expression_t(binary_expression_t&& other)
+			: _lhs(std::move(other._lhs))
+			, _rhs(std::move(other._rhs))
+		{
+		}
+#endif
 		binary_expression_t& operator=(const binary_expression_t&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 		binary_expression_t& operator=(binary_expression_t&&) = default;
+#else
+		binary_expression_t& operator=(binary_expression_t&& other)
+		{
+			_lhs = std::move(other._lhs);
+			_rhs = std::move(other._rhs);
+			return *this;
+		}
+#endif
 		~binary_expression_t() = default;
 
 		Lhs _lhs;
@@ -235,9 +301,24 @@ namespace sqlpp
 		{}
 
 		unary_expression_t(const unary_expression_t&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 		unary_expression_t(unary_expression_t&&) = default;
+#else
+		unary_expression_t(unary_expression_t&& other)
+			: _rhs(std::move(other._rhs))
+		{
+		}
+#endif
 		unary_expression_t& operator=(const unary_expression_t&) = default;
+#if SQLPP_HAS_DEFAULTED_MOVE_METHODS
 		unary_expression_t& operator=(unary_expression_t&&) = default;
+#else
+		unary_expression_t& operator=(unary_expression_t&& other)
+		{
+			_rhs = std::move(other._rhs);
+			return *this;
+		}
+#endif
 		~unary_expression_t() = default;
 
 		Rhs _rhs;

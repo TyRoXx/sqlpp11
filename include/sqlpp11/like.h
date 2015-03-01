@@ -44,8 +44,6 @@ namespace sqlpp
 
 		struct _alias_t
 		{
-			static constexpr const char _literal[] =  "like_";
-			using _name_t = sqlpp::make_char_sequence<sizeof(_literal), _literal>;
 			template<typename T>
 				struct _member_t
 				{
