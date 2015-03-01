@@ -81,7 +81,7 @@ namespace sqlpp
 		template<typename E, typename... Elements>
 			struct is_element_of<E, type_set<Elements...>>
 			{
-				static constexpr bool value = ::sqlpp::logic::any_t<std::is_same<E, Elements>::value...>::value;
+				static SQLPP_CONSTEXPR_OR_CONST bool value = ::sqlpp::logic::any_t<std::is_same<E, Elements>::value...>::value;
 			};
 
 		template<typename L, typename R>
@@ -108,13 +108,13 @@ namespace sqlpp
 		template<typename... LElements, typename... RElements>
 			struct is_superset_of<type_set<LElements...>, type_set<RElements...>>
 			{
-				static constexpr bool value = joined_set_t<type_set<LElements...>, type_set<RElements...>>::size::value == sizeof...(LElements);
+				static SQLPP_CONSTEXPR_OR_CONST bool value = joined_set_t<type_set<LElements...>, type_set<RElements...>>::size::value == sizeof...(LElements);
 			};
 
 		template<typename L, typename R>
 			struct is_subset_of
 			{
-				static constexpr bool value = is_superset_of<R, L>::value;
+				static SQLPP_CONSTEXPR_OR_CONST bool value = is_superset_of<R, L>::value;
 			};
 
 		template<typename L, typename R>
@@ -126,7 +126,7 @@ namespace sqlpp
 		template<typename... LElements, typename... RElements>
 			struct is_disjunct_from<type_set<LElements...>, type_set<RElements...>>
 			{
-				static constexpr bool value = joined_set_t<type_set<LElements...>, type_set<RElements...>>::size::value == sizeof...(LElements) + sizeof...(RElements);
+				static SQLPP_CONSTEXPR_OR_CONST bool value = joined_set_t<type_set<LElements...>, type_set<RElements...>>::size::value == sizeof...(LElements)+sizeof...(RElements);
 			};
 
 		template<>

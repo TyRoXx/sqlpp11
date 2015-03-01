@@ -28,6 +28,7 @@
 #define SQLPP_DETAIL_TYPE_VECTOR_H
 
 #include <sqlpp11/wrong.h>
+#include <sqlpp11/workaround.h>
 
 namespace sqlpp
 {
@@ -79,7 +80,7 @@ namespace sqlpp
 		template<typename... T>
 			struct type_vector_size<type_vector<T...>>
 			{
-				static constexpr std::size_t value = sizeof...(T);
+				static SQLPP_CONSTEXPR_OR_CONST std::size_t value = sizeof...(T);
 			};
 	}
 }

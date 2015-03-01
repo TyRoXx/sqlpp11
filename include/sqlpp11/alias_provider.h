@@ -29,13 +29,14 @@
 
 #include <type_traits>
 #include <sqlpp11/char_sequence.h>
+#include <sqlpp11/workaround.h>
 
 #define SQLPP_ALIAS_PROVIDER(name) \
 	struct name##_t\
 {\
 	struct _alias_t\
 	{\
-		static constexpr const char _literal[] =  #name;\
+		static SQLPP_CONSTEXPR_OR_CONST const char _literal[] =  #name;\
 		using _name_t = sqlpp::make_char_sequence<sizeof(_literal), _literal>;\
 		template<typename T>\
 		struct _member_t\
@@ -53,15 +54,18 @@ namespace sqlpp
 	template<typename T, typename Enable = void>
 		struct is_alias_provider_t
 		{
-			static constexpr bool value = false;
+			static SQLPP_CONSTEXPR_OR_CONST bool value = false;
 		};
 
 	template<typename T>
 		struct is_alias_provider_t<T, typename std::enable_if<std::is_class<typename T::_alias_t::template _member_t<int>>::value, void>::type>
 		{
-			static constexpr bool value = true;
+			static SQLPP_CONSTEXPR_OR_CONST bool value = true;
 		};
 
+#if SQLPP_HAS_INLINE_NAMESPACE
+	inline
+#endif
 	namespace alias
 	{
 		SQLPP_ALIAS_PROVIDER(a)
@@ -92,6 +96,10 @@ namespace sqlpp
 		SQLPP_ALIAS_PROVIDER(left)
 		SQLPP_ALIAS_PROVIDER(right)
 	}
+
+#if !SQLPP_HAS_INLINE_NAMESPACE
+	using namespace alias;
+#endif
 }
 
 #endif

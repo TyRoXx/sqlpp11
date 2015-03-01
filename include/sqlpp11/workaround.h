@@ -24,42 +24,20 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef SQLPP_VALUE_TYPE_FWD_H
-#define SQLPP_VALUE_TYPE_FWD_H
+#ifndef SQLPP_WORKAROUND_H
+#define SQLPP_WORKAROUND_H
 
-#include <sqlpp11/wrong.h>
-#include <sqlpp11/type_traits.h>
-
-namespace sqlpp
-{
-	template<typename ValueType>
-		struct parameter_value_t
-		{
-			static_assert(wrong_t<parameter_value_t>::value, "Missing parameter value type for ValueType");
-		};
-
-	template<typename Column, typename ValueType>
-		struct column_operators
-		{
-			static_assert(wrong_t<column_operators>::value, "Missing column operators for ValueType");
-		};
-
-	template<typename Expr, typename ValueType>
-		struct expression_operators
-		{
-			static_assert(wrong_t<expression_operators>::value, "Missing expression operators for ValueType");
-		};
-
-	template<typename ValueType, typename T>
-		struct is_valid_operand
-		{
-			static SQLPP_CONSTEXPR_OR_CONST bool value =
-				is_expression_t<T>::value // expressions are OK
-				and ValueType::template _is_valid_operand<T>::value // the correct value type is required, of course
-				;
-		};
-}
-
+//TODO: consider using Boost for this stuff
+#ifdef _MSC_VER
+#	define SQLPP_CONSTEXPR_OR_CONST const
+#else
+#	define SQLPP_CONSTEXPR_OR_CONST constexpr
 #endif
 
+#ifdef _MSC_VER
+#	define SQLPP_HAS_INLINE_NAMESPACE 0
+#else
+#	define SQLPP_HAS_INLINE_NAMESPACE 1
+#endif
 
+#endif
